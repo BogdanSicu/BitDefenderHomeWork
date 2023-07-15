@@ -1,8 +1,8 @@
-const pool = require('../db');
+const pool = require('../../db');
 const queries = require("./queries")
 
 const getPolicies = (req, res) => {
-    pool.query(queries.getPoliciesWithoutId, (error, results) => {
+    pool.query(queries.getPolicies, (error, results) => {
         if(error) throw error;
 
         res.status(200).json(results.rows);
@@ -32,8 +32,30 @@ const addPolicy = (req, res) => {
     })
 }
 
+const deletePolicyById = (req, res) => {
+    const id = parseInt(req.params.id);
+
+    pool.query(queries.getPolicyById, [id], (error, results) => {
+        if(error) throw error;
+
+        if(results.rows.length < 1) {
+            res.status(404).json("Policy not found. Could not delete it");
+        } else {
+
+            pool.query(queries.deletePolicy, [id], (error, results) => {
+                if(error) throw error;
+
+                res.status(202).json("Policy deleted");
+            })
+        }
+    })
+}
+
+
+
 module.exports = {
     getPolicies,
     getPolicyById,
     addPolicy,
+    deletePolicyById,
 };
