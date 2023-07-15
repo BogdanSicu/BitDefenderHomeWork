@@ -51,6 +51,26 @@ const deletePolicyById = (req, res) => {
     })
 }
 
+const patchPolicy = (req, res) => {
+    const id = parseInt(req.params.id);
+
+    const { module_active } = req.body;
+
+    pool.query(queries.getPolicyById, [id], (error, results) => {
+        if(error) throw error;
+
+        if(results.rows.length < 1) {
+            res.status(404).json("Policy not found. Could not update it");
+        } else {
+
+            pool.query(queries.patchPolicy, [id, module_active], (error, results) => {
+                if(error) throw error;
+
+                res.status(202).json("Policy patched");
+            })
+        }
+    })
+}
 
 
 module.exports = {
@@ -58,4 +78,5 @@ module.exports = {
     getPolicyById,
     addPolicy,
     deletePolicyById,
+    patchPolicy
 };
