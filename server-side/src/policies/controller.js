@@ -23,9 +23,9 @@ const getPolicyById = (req, res) => {
 }
 
 const addPolicy = (req, res) => {
-    const { nume, module_active, editable } = req.body;
+    const { nume, module_active } = req.body;
 
-    pool.query(queries.addNewPolicy, [nume, module_active, editable], (error, results) => {
+    pool.query(queries.addNewPolicy, [nume, module_active], (error, results) => {
         if(error) throw error;
 
         res.status(201).json("New policy created");

@@ -1,1 +1,38 @@
-<p>policies works!</p>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+            <tr>
+                <th>Policy Name</th>
+                <th>Active Mode</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let policy of policyList">
+                <td>{{policy.name}}</td>
+                <td>
+                    <label>Firewall</label>
+                    <input type="radio" value="firewall" name="activeMode{{policy.id}}"
+                    [(ngModel)] = "policy.moduleActive">
+                    <label>Antivirus</label>
+                    <input type="radio" value="antivirus" name="activeMode{{policy.id}}"
+                    [(ngModel)] = "policy.moduleActive">
+                    <label>Update</label>
+                    <input type="radio" value="update" name="activeMode{{policy.id}}"
+                    [(ngModel)] = "policy.moduleActive">
+                </td>
+                <td>
+                    <input type="button" value="Save">
+                </td>
+                <td>
+                    <input type="button" value="Clone">
+                </td>
+                <td>
+                    <input type="button" value="Delete">
+                </td>
+            </tr>
+        <tbody>
+    </table>
+</div>

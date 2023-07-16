@@ -23,7 +23,6 @@ export class PoliciesService {
                                 id: res.id,
                                 name: res.nume,
                                 moduleActive: res.module_active,
-                                editable: res.editable
                             })
                         }
                     }
