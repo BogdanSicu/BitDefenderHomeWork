@@ -54,7 +54,7 @@ const deletePolicyById = (req, res) => {
 const patchPolicy = (req, res) => {
     const id = parseInt(req.params.id);
 
-    const { module_active } = req.body;
+    const { nume, module_active } = req.body;
 
     pool.query(queries.getPolicyById, [id], (error, results) => {
         if(error) throw error;
@@ -63,7 +63,7 @@ const patchPolicy = (req, res) => {
             res.status(404).json("Policy not found. Could not update it");
         } else {
 
-            pool.query(queries.patchPolicy, [id, module_active], (error, results) => {
+            pool.query(queries.patchPolicy, [id, module_active, nume], (error, results) => {
                 if(error) throw error;
 
                 res.status(202).json("Policy patched");

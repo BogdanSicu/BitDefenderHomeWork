@@ -20,4 +20,23 @@ export class PoliciesComponent implements OnInit {
     ))
   }
 
+  clonePolicy(clonedPolicy: PolicyModel) {
+    this.policiesService.postClonedPolicy(clonedPolicy).subscribe(
+        window.location.reload()
+    );
+  }
+
+  deletePolicy(policyId: number) {
+    this.policiesService.deletePolicy(policyId).subscribe(
+      window.location.reload()
+    )
+  }
+
+  patchPolicy(patchedPolicy: PolicyModel) {
+    console.log(patchedPolicy)
+    this.policiesService.patchPolicy(patchedPolicy).subscribe(
+      window.location.reload()
+    )
+  }
+
 }

@@ -11,26 +11,28 @@
         </thead>
         <tbody>
             <tr *ngFor = "let policy of policyList">
-                <td>{{policy.name}}</td>
+                <td>
+                    <input type="text" [(ngModel)] = "policy.name" [disabled] = "policy.name == 'Default' && policy.id == 45">
+                </td>
                 <td>
                     <label>Firewall</label>
                     <input type="radio" value="firewall" name="activeMode{{policy.id}}"
-                    [(ngModel)] = "policy.moduleActive">
+                    [(ngModel)] = "policy.moduleActive" [disabled] = "policy.name == 'Default' && policy.id == 45">
                     <label>Antivirus</label>
                     <input type="radio" value="antivirus" name="activeMode{{policy.id}}"
-                    [(ngModel)] = "policy.moduleActive">
+                    [(ngModel)] = "policy.moduleActive" [disabled] = "policy.name == 'Default' && policy.id == 45">
                     <label>Update</label>
                     <input type="radio" value="update" name="activeMode{{policy.id}}"
-                    [(ngModel)] = "policy.moduleActive">
+                    [(ngModel)] = "policy.moduleActive" [disabled] = "policy.name == 'Default' && policy.id == 45">
                 </td>
                 <td>
-                    <input type="button" value="Save">
+                    <input type="button" value="Save" (click) = "patchPolicy(policy)" [disabled] = "policy.name == 'Default' && policy.id == 45">
                 </td>
                 <td>
-                    <input type="button" value="Clone">
+                    <input type="button" value="Clone" (click) = "clonePolicy(policy)">
                 </td>
                 <td>
-                    <input type="button" value="Delete">
+                    <input type="button" value="Delete" (click) = "deletePolicy(policy.id)" [disabled] = "policy.name == 'Default' && policy.id == 45">
                 </td>
             </tr>
         <tbody>

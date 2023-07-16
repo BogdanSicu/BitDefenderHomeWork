@@ -15,21 +15,47 @@ export class PoliciesService {
         .pipe(
             map(
                 response => {
-                    const responseArray = [];
-                    for(const key in response) {
-                        const res = (response as any)[key]
-                        if(response.hasOwnProperty(key)) {
-                            responseArray.push({
-                                id: res.id,
-                                name: res.nume,
-                                moduleActive: res.module_active,
-                            })
-                        }
-                    }
-                    return responseArray;
+                    return this.mapArrayOfPolicyModel(response);
                 }
             )
         )
     }
+    
+    mapArrayOfPolicyModel(response: any): PolicyModel[] {
+        const responseArray = [];
+        for(const key in response) {
+            const res = (response as any)[key]
+            if(response.hasOwnProperty(key)) {
+                responseArray.push({
+                    id: res.id,
+                    name: res.nume,
+                    moduleActive: res.module_active,
+                })
+            }
+        }
+        return responseArray;
+    }
+
+    postClonedPolicy(requestBody: PolicyModel): any {
+        return this.http.post("http://localhost:3000/api/v1/add-policy", ({nume: requestBody.name, module_active: requestBody.moduleActive}));
+    }
+
+    deletePolicy(policyId: number): any {
+        return this.http.delete("http://localhost:3000/api/v1/delete-policy-by-id/" + policyId);
+    }
+
+    patchPolicy(requestBody: PolicyModel): any {
+        return this.http.patch("http://localhost:3000/api/v1/patch-policy/" + requestBody.id,
+        ({
+            nume: requestBody.name, module_active: requestBody.moduleActive
+        })).pipe(
+            map(
+                response => {
+                    console.log(response);
+                }
+            )
+        )
+    }
+
 
 }
