@@ -14,10 +14,10 @@ export class PoliciesComponent implements OnInit {
   constructor(private policiesService: PoliciesService) { }
 
   ngOnInit(): void {
-      console.log(this.policiesService.getAllPolicies().subscribe( response => {
+    this.policiesService.getAllPolicies().subscribe( response => {
         this.policyList = response;
       }
-    ))
+    )
   }
 
   clonePolicy(clonedPolicy: PolicyModel) {
@@ -33,7 +33,6 @@ export class PoliciesComponent implements OnInit {
   }
 
   patchPolicy(patchedPolicy: PolicyModel) {
-    console.log(patchedPolicy)
     this.policiesService.patchPolicy(patchedPolicy).subscribe(
       window.location.reload()
     )
