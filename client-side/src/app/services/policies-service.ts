@@ -6,12 +6,14 @@ import { Observable, map } from "rxjs";
 @Injectable({providedIn: "root"})
 export class PoliciesService {
 
+    private baseUrl: String = "http://localhost:3000";
+
     constructor(private http: HttpClient) {
 
     }
 
     getAllPolicies(): Observable<PolicyModel[]> {
-        return this.http.get("http://localhost:3000/api/v1/get-policies")
+        return this.http.get(this.baseUrl + "/api/v1/get-policies")
         .pipe(
             map(
                 response => {
@@ -37,15 +39,15 @@ export class PoliciesService {
     }
 
     postClonedPolicy(requestBody: PolicyModel): any {
-        return this.http.post("http://localhost:3000/api/v1/add-policy", ({nume: requestBody.name, module_active: requestBody.moduleActive}));
+        return this.http.post(this.baseUrl + "/api/v1/add-policy", ({nume: requestBody.name, module_active: requestBody.moduleActive}));
     }
 
     deletePolicy(policyId: number): any {
-        return this.http.delete("http://localhost:3000/api/v1/delete-policy-by-id/" + policyId);
+        return this.http.delete(this.baseUrl + "/api/v1/delete-policy-by-id/" + policyId);
     }
 
     patchPolicy(requestBody: PolicyModel): any {
-        return this.http.patch("http://localhost:3000/api/v1/patch-policy/" + requestBody.id,
+        return this.http.patch(this.baseUrl + "/api/v1/patch-policy/" + requestBody.id,
         ({
             nume: requestBody.name, module_active: requestBody.moduleActive
         })).pipe(
