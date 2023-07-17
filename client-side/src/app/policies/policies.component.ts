@@ -14,28 +14,31 @@ export class PoliciesComponent implements OnInit {
   constructor(private policiesService: PoliciesService) { }
 
   ngOnInit(): void {
-    this.policiesService.getAllPolicies().subscribe( response => {
+    this.policiesService.getAllPolicies().subscribe( 
+      response => {
         this.policyList = response;
       }
-    )
+    );
   }
 
   clonePolicy(clonedPolicy: PolicyModel) {
     this.policiesService.postClonedPolicy(clonedPolicy).subscribe(
-        window.location.reload()
+      response => {
+        this.policyList = response;
+      }
     );
   }
 
   deletePolicy(policyId: number) {
     this.policiesService.deletePolicy(policyId).subscribe(
       window.location.reload()
-    )
+    );
   }
 
   patchPolicy(patchedPolicy: PolicyModel) {
     this.policiesService.patchPolicy(patchedPolicy).subscribe(
       window.location.reload()
-    )
+    );
   }
 
 }

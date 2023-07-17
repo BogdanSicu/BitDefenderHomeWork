@@ -38,8 +38,15 @@ export class PoliciesService {
         return responseArray;
     }
 
-    postClonedPolicy(requestBody: PolicyModel): any {
-        return this.http.post(this.baseUrl + "/api/v1/add-policy", ({nume: requestBody.name, module_active: requestBody.moduleActive}));
+    postClonedPolicy(requestBody: PolicyModel): Observable<PolicyModel[]> {
+        return this.http.post(this.baseUrl + "/api/v1/add-policy", ({nume: requestBody.name, module_active: requestBody.moduleActive}))
+        .pipe(
+            map(
+                response => {
+                    return this.mapArrayOfPolicyModel(response);
+                }
+            )
+        );
     }
 
     deletePolicy(policyId: number): any {

@@ -28,7 +28,11 @@ const addPolicy = (req, res) => {
     pool.query(queries.addNewPolicy, [nume, module_active], (error, results) => {
         if(error) throw error;
 
-        res.status(201).json("New policy created");
+        pool.query(queries.getPolicies, (error, results) => {
+            if(error) throw error;
+    
+            res.status(200).json(results.rows);
+        })
     })
 }
 
