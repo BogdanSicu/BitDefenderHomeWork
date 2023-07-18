@@ -37,7 +37,7 @@ export class PoliciesComponent implements OnInit {
 
   patchPolicy(patchedPolicy: PolicyModel) {
     this.policiesService.patchPolicy(patchedPolicy).subscribe(
-      window.location.reload()
+      // window.location.reload()
     );
   }
 

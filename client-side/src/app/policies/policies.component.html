@@ -4,6 +4,7 @@
             <tr>
                 <th>Policy Name</th>
                 <th>Active Mode</th>
+                <th>Action</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -16,14 +17,31 @@
                 </td>
                 <td>
                     <label>Firewall</label>
-                    <input type="radio" value="firewall" name="activeMode{{policy.id}}"
-                    [(ngModel)] = "policy.moduleActive" [disabled] = "policy.name == 'Default' && i == 0">
+                    <input type="checkbox" 
+                    [(ngModel)] = "policy.firewall_module"
+                    [disabled] = "policy.name == 'Default' && i == 0">
                     <label>Antivirus</label>
-                    <input type="radio" value="antivirus" name="activeMode{{policy.id}}"
-                    [(ngModel)] = "policy.moduleActive" [disabled] = "policy.name == 'Default' && i == 0">
+                    <input type="checkbox" 
+                    [(ngModel)] = "policy.antivirus_module"
+                    [disabled] = "policy.name == 'Default' && i == 0">
                     <label>Update</label>
-                    <input type="radio" value="update" name="activeMode{{policy.id}}"
-                    [(ngModel)] = "policy.moduleActive" [disabled] = "policy.name == 'Default' && i == 0">
+                    <input type="checkbox"
+                    [(ngModel)] = "policy.update_module"
+                    [disabled] = "policy.name == 'Default' && i == 0">
+                </td>
+                <td>
+                    <label>Delete</label>
+                    <input type="radio" value="delete" name="activeMode{{policy.id}}"
+                    [(ngModel)] = "policy.chosen_action" 
+                    [disabled] = "policy.name == 'Default' && i == 0">
+                    <label>Move to quarantine</label>
+                    <input type="radio" value="move_to_quarantine" name="activeMode{{policy.id}}"
+                    [(ngModel)] = "policy.chosen_action" 
+                    [disabled] = "policy.name == 'Default' && i == 0">
+                    <label>Ignore</label>
+                    <input type="radio" value="ignore" name="activeMode{{policy.id}}"
+                    [(ngModel)] = "policy.chosen_action" 
+                    [disabled] = "policy.name == 'Default' && i == 0">
                 </td>
                 <td>
                     <input type="button" value="Save" (click) = "patchPolicy(policy)" [disabled] = "policy.name == 'Default' && i == 0">

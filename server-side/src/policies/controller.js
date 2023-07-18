@@ -23,9 +23,15 @@ const getPolicyById = (req, res) => {
 }
 
 const addPolicy = (req, res) => {
-    const { nume, module_active } = req.body;
+    const { nume, chosen_action, antivirus_module, firewall_module, update_module } = req.body;
+    const chosen_action_list = ["delete", "move to quarantine", "ignore"]
 
-    pool.query(queries.addNewPolicy, [nume, module_active], (error, results) => {
+    if(!chosen_action_list.includes(chosen_action)) {
+        res.status(400).json("Chosen action doesn't exist " + chosen_action);
+        return;
+    } 
+
+    pool.query(queries.addNewPolicy, [nume, chosen_action, antivirus_module, firewall_module, update_module], (error, results) => {
         if(error) throw error;
 
         pool.query(queries.getPolicies, (error, results) => {
@@ -58,7 +64,14 @@ const deletePolicyById = (req, res) => {
 const patchPolicy = (req, res) => {
     const id = parseInt(req.params.id);
 
-    const { nume, module_active } = req.body;
+    const { nume, chosen_action, antivirus_module, firewall_module, update_module } = req.body;
+    
+    const chosen_action_list = ["delete", "move to quarantine", "ignore"]
+
+    if(!chosen_action_list.includes(chosen_action)) {
+        res.status(400).json("Chosen action doesn't exist " + chosen_action);
+        return;
+    } 
 
     pool.query(queries.getPolicyById, [id], (error, results) => {
         if(error) throw error;
@@ -67,7 +80,7 @@ const patchPolicy = (req, res) => {
             res.status(404).json("Policy not found. Could not update it");
         } else {
 
-            pool.query(queries.patchPolicy, [id, module_active, nume], (error, results) => {
+            pool.query(queries.patchPolicy, [id, chosen_action, nume, antivirus_module, firewall_module, update_module], (error, results) => {
                 if(error) throw error;
 
                 res.status(202).json("Policy patched");

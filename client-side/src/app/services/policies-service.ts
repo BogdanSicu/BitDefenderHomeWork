@@ -31,7 +31,10 @@ export class PoliciesService {
                 responseArray.push({
                     id: res.id,
                     name: res.nume,
-                    moduleActive: res.module_active,
+                    chosen_action: res.module_active,
+                    antivirus_module: res.antivirus_module,
+                    firewall_module: res.firewall_module,
+                    update_module: res.update_module
                 })
             }
         }
@@ -39,7 +42,8 @@ export class PoliciesService {
     }
 
     postClonedPolicy(requestBody: PolicyModel): Observable<PolicyModel[]> {
-        return this.http.post(this.baseUrl + "/api/v1/add-policy", ({nume: requestBody.name, module_active: requestBody.moduleActive}))
+        return this.http.post(this.baseUrl + "/api/v1/add-policy", 
+        ({nume: requestBody.name, module_active: requestBody.update_module}))
         .pipe(
             map(
                 response => {
@@ -56,7 +60,11 @@ export class PoliciesService {
     patchPolicy(requestBody: PolicyModel): any {
         return this.http.patch(this.baseUrl + "/api/v1/patch-policy/" + requestBody.id,
         ({
-            nume: requestBody.name, module_active: requestBody.moduleActive
+            nume: requestBody.name, 
+            chosen_action: requestBody.chosen_action,
+            antivirus_module: requestBody.antivirus_module,
+            firewall_module: requestBody.firewall_module,
+            update_module: requestBody.update_module
         })).pipe(
             map(
                 response => {
